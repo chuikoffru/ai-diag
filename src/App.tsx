@@ -73,7 +73,7 @@ const App: React.FC = () => {
   }
 
   if (step > questions.length) {
-    const total = result.low + result.medium + result.high;
+    //const total = result.low + result.medium + result.high;
     let level = "Скептик";
     let description = `
       Скептики сомневаются в пользе и перспективах искусственного интеллекта. Они считают, 

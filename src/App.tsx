@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import questions from "./questions";
+import realist from "./assets/realist.jpg";
+import sceptic from "./assets/sceptic.jpg";
+import dreamer from "./assets/dreamer.jpg";
 
 const App: React.FC = () => {
   const [step, setStep] = useState(0);
@@ -55,6 +58,7 @@ const App: React.FC = () => {
       что ИИ может нанести больше вреда, чем принести пользы, и предпочли бы ограничить его развитие. 
       Для них технологии ИИ — это угроза или излишняя сложность, а не решение.
     `;
+    let image = sceptic;
 
     if (totalScore > questions.length * 1 && totalScore <= questions.length * 2) {
       category = "Реалист";
@@ -62,6 +66,7 @@ const App: React.FC = () => {
         Реалисты видят и плюсы, и минусы ИИ. Они признают его потенциал для улучшения жизни, но осознают 
         ограничения и риски. Реалисты понимают, что внедрение ИИ должно быть сбалансированным, с учётом этики и возможных последствий.
       `;
+      image = realist
     } else if (totalScore > questions.length * 2) {
       category = "Мечтатель";
       description = `
@@ -69,11 +74,13 @@ const App: React.FC = () => {
         Они ожидают, что ИИ решит все глобальные проблемы, сделает жизнь лучше и приведёт к утопии. 
         Для них технологии — это путь к идеальному будущему.
       `;
+      image = dreamer
     }
 
     return (
       <div className="app">
         <h1>Ваш результат: {category}</h1>
+        <img src={image} alt={category} width={300} />
         <p>{description}</p>
         <button onClick={resetTest}>Пройти тест снова</button>
       </div>

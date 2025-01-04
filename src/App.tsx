@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import questions from "./questions";
 
-type Result = {
-  low: number;
-  medium: number;
-  high: number;
-};
-
 const App: React.FC = () => {
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
-  const [result, setResult] = useState<Result>({ low: 0, medium: 0, high: 0 });
+  const [answers, setAnswers] = useState<number[]>(Array(questions.length).fill(0));
+  const [totalScore, setTotalScore] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleAnswer = (answerIndex: number) => {
+  const handleAnswer = (score: number) => {
     const newAnswers = [...answers];
-    newAnswers[step - 1] = answerIndex;
+    newAnswers[step - 1] = score;
     setAnswers(newAnswers);
   };
 
@@ -23,18 +17,8 @@ const App: React.FC = () => {
     setIsTransitioning(true);
 
     setTimeout(() => {
-      const currentQuestion = questions[step - 1];
-      const answerIndex = answers[step - 1];
-      if (answerIndex !== null) {
-        const points = currentQuestion.answers[answerIndex].points;
-
-        setResult((prev) => ({
-          low: prev.low + points.low,
-          medium: prev.medium + points.medium,
-          high: prev.high + points.high,
-        }));
-      }
-
+      const currentScore = answers[step - 1];
+      setTotalScore((prev) => prev + currentScore);
       setStep((prev) => prev + 1);
       setIsTransitioning(false);
     }, 300);
@@ -42,30 +26,22 @@ const App: React.FC = () => {
 
   const handleBack = () => {
     const previousStep = step - 1;
-    const previousAnswerIndex = answers[previousStep - 1];
-    const points = previousAnswerIndex !== null ? questions[previousStep - 1].answers[previousAnswerIndex].points : { low: 0, medium: 0, high: 0 };
-
-    setResult((prev) => ({
-      low: prev.low - points.low,
-      medium: prev.medium - points.medium,
-      high: prev.high - points.high,
-    }));
-
+    setTotalScore((prev) => prev - answers[previousStep - 1]);
     setStep(previousStep);
   };
 
   const resetTest = () => {
     setStep(0);
-    setAnswers(Array(questions.length).fill(null));
-    setResult({ low: 0, medium: 0, high: 0 });
+    setAnswers(Array(questions.length).fill(0));
+    setTotalScore(0);
   };
 
   if (step === 0) {
     return (
       <div className="app">
-        <h1>Скептик, реалист или мечтатель: ваш взгляд на ИИ</h1>
+        <h1>Скептик, реалист или мечтатель — ваш взгляд на развитие ИИ</h1>
         <p>
-          Пройдите тест из 12 вопросов, чтобы узнать, уровень вашего доверия и энтузиазма в отношении развития искусственного интеллекта.
+          Ответьте на вопросы, чтобы узнать, как вы относитесь к искусственному интеллекту.
         </p>
         <button onClick={() => setStep(1)}>Начать</button>
       </div>
@@ -73,33 +49,31 @@ const App: React.FC = () => {
   }
 
   if (step > questions.length) {
-    //const total = result.low + result.medium + result.high;
-    let level = "Скептик";
+    let category = "Скептик";
     let description = `
       Скептики сомневаются в пользе и перспективах искусственного интеллекта. Они считают, 
       что ИИ может нанести больше вреда, чем принести пользы, и предпочли бы ограничить его развитие. 
       Для них технологии ИИ — это угроза или излишняя сложность, а не решение.
     `;
 
-    if (result.medium >= 18 && result.medium <= 26) {
-      level = "Реалист"
+    if (totalScore > questions.length * 1 && totalScore <= questions.length * 2) {
+      category = "Реалист";
       description = `
         Реалисты видят и плюсы, и минусы ИИ. Они признают его потенциал для улучшения жизни, но осознают 
         ограничения и риски. Реалисты понимают, что внедрение ИИ должно быть сбалансированным, с учётом этики и возможных последствий.
       `;
-    };
-    if (result.high >= 12 && result.high <= 17) {
-      level = "Мечтатель"
+    } else if (totalScore > questions.length * 2) {
+      category = "Мечтатель";
       description = `
-      Мечтатели вдохновлены возможностями ИИ и верят, что он способен полностью преобразовать человечество. 
-      Они ожидают, что ИИ решит все глобальные проблемы, сделает жизнь лучше и приведёт к утопии. 
-      Для них технологии — это путь к идеальному будущему.
-    `;
-    };
+        Мечтатели вдохновлены возможностями ИИ и верят, что он способен полностью преобразовать человечество. 
+        Они ожидают, что ИИ решит все глобальные проблемы, сделает жизнь лучше и приведёт к утопии. 
+        Для них технологии — это путь к идеальному будущему.
+      `;
+    }
 
     return (
       <div className="app">
-        <h1>Вы - {level}</h1>
+        <h1>Ваш результат: {category}</h1>
         <p>{description}</p>
         <button onClick={resetTest}>Пройти тест снова</button>
       </div>
@@ -120,24 +94,29 @@ const App: React.FC = () => {
         {question.answers.map((answer, index) => (
           <label
             key={index}
-            className={answers[step - 1] === index ? "selected" : ""}
+            className={answers[step - 1] === answer.score ? "selected" : ""}
           >
             <input
               type="radio"
               name="answer"
               value={index}
-              checked={answers[step - 1] === index}
-              onChange={() => handleAnswer(index)}
+              checked={answers[step - 1] === answer.score}
+              onChange={() => handleAnswer(answer.score)}
             />
             {answer.text}
           </label>
         ))}
       </form>
       <div className="navigation">
-        <button onClick={handleBack} disabled={step === 1}>Назад</button>
+        <button
+          onClick={handleBack}
+          disabled={step === 1}
+        >
+          Назад
+        </button>
         <button
           onClick={handleNext}
-          disabled={answers[step - 1] === null}
+          disabled={answers[step - 1] === 0}
         >
           Далее
         </button>

@@ -118,3 +118,16 @@ input[type="radio"] {
   display: flex;
   justify-content: space-between;
 }
+
+.start_title {
+  font-size: 1.6rem;
+}
+
+.start_images {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 6px;
+  width: 100%;
+  justify-content: center;
+}

@@ -1,50 +1,19 @@
-# React + TypeScript + Vite
+# Скептик, реалист или мечтатель — ваш взгляд на развитие ИИ
+### Тест на определение уровня энтузиазма и доверия к искусственному интеллекту
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[@ai_skillful](https://t.me/ai_skillful)
 
-Currently, two official plugins are available:
+Скептики сомневаются в пользе и перспективах искусственного интеллекта. Они считают, 
+      что ИИ может нанести больше вреда, чем принести пользы, и предпочли бы ограничить его развитие. 
+      Для них технологии ИИ — это угроза или излишняя сложность, а не решение.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+Реалисты видят и плюсы, и минусы ИИ. Они признают его потенциал для улучшения жизни, но осознают 
+        ограничения и риски. Реалисты понимают, что внедрение ИИ должно быть сбалансированным, с учётом этики и возможных последствий.
+      
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Мечтатели вдохновлены возможностями ИИ и верят, что он способен полностью преобразовать человечество. 
+        Они ожидают, что ИИ решит все глобальные проблемы, сделает жизнь лучше и приведёт к утопии. 
+        Для них технологии — это путь к идеальному будущему.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Узнайте больше в моем телеграм канале [@ai_skillful](https://t.me/ai_skillful)
